@@ -6,6 +6,10 @@
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
+input {
+  text-align: center !important;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -28,4 +32,18 @@
 
 .hide {
   display: none !important;
+}
+
+.tabs {
+  background-color: #fff;
+  width: inherit
+}
+
+.tabs .header {
+  background-color: #1fbcd3;
+  box-shadow: none
+}
+
+.tabs .tab {
+ min-width: 50%
 }

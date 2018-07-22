@@ -1,7 +1,7 @@
 import React from 'react'
 import { shallow,  configure } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import Grid from '../src/Components/Grid'
+import Grid from '../src/components/Grid'
 
 configure({ adapter: new Adapter() })
 
