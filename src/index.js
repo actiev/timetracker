@@ -1,16 +1,32 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import { Provider } from 'react-redux'
-import rootReducer from './reducers'
-import TaskList from './containers/TaskList'
+import { routerReducer } from 'react-router-redux'
+import { BrowserRouter as Router} from 'react-router-dom'
+import { renderRoutes } from 'react-router-config'
+import taskReducers from './reducers/index'
 import './assets/App.css'
+import routes from './router/index'
+import rootSaga from './sagas'
 
-const store = createStore(rootReducer)
+const sagaMiddleware = createSagaMiddleware()
+const store = createStore(
+  combineReducers({
+    initialState: taskReducers,
+    routing: routerReducer
+  }),
+  applyMiddleware(sagaMiddleware)
+)
+
+sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <Provider store={store}>
-    <TaskList />
+    <Router>
+      {renderRoutes(routes)}
+    </Router>
   </Provider>,
   document.getElementById('root')
 )

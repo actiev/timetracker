@@ -10,12 +10,28 @@ input {
   text-align: center !important;
 }
 
+a {
+  text-decoration: none!important;
+}
+
+#modal {
+  width: 767px
+}
+
+#alert-dialog-title h2 {
+  color: #f50057
+}
+
 .container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 1024px;
+}
+
+.row {
+  margin-top: 20px;
 }
 
 .circle {
@@ -27,7 +43,7 @@ input {
   align-items: center;
   box-shadow: 0px 3px 10px 0px #a19e9e;
   font-size: 26px;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 .hide {
@@ -36,7 +52,8 @@ input {
 
 .tabs {
   background-color: #fff;
-  width: inherit
+  width: inherit;
+  margin-top: 18px;
 }
 
 .tabs .header {
@@ -46,4 +63,9 @@ input {
 
 .tabs .tab {
  min-width: 50%
+}
+
+.charts .row {
+  display: flex;
+  justify-content: flex-end;
 }

@@ -18,7 +18,7 @@ const TextInput = ({classes, action, value}) => (
     name="task"
     className={classes.input}
     value={value}
-    placeholder="Enter task title"
+    placeholder="Name of your task"
     onChange={action}
   />
 )

@@ -9,27 +9,27 @@ const styles = ({
     background: '#fff',
     minWidth: 65,
     height: 40,
-    marginBottom: 18,
     '&:hover': {
       backgroundColor: '#eaf6ff'
     }
   }
 })
 
-const startButton = ({ action, classes, className }) => (
+const button = ({ action, classes, className, text }) => (
   <Button
     variant="contained"
     onClick={action}
     className={classes.button + ' ' + className}
   >
-    Start
+    {text}
   </Button>
 )
 
-startButton.propTypes = {
+button.propTypes = {
+  text: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
-  action: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired
+  action: PropTypes.func,
+  className: PropTypes.string
 }
 
-export default withStyles(styles)(startButton)
+export default withStyles(styles)(button)
