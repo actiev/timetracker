@@ -6,7 +6,8 @@ const CustomTableCell = withStyles(({
     backgroundColor: '#fff',
     color: '#a19e9e',
     height: 65,
-    fontSize: 14
+    fontSize: 13,
+    fontWeight: 600
   },
   body: {
     fontSize: 14,

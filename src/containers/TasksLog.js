@@ -9,12 +9,14 @@ import Paper from '@material-ui/core/Paper'
 import Button from '../components/Button'
 import Time from '../components/Time'
 import { Link } from 'react-router-dom'
-import {bindActionCreators} from 'redux'
+import { bindActionCreators } from 'redux'
 import * as TabsActions from '../actions'
 import {connect} from 'react-redux'
 
 class TasksLog extends Component {
   render () {
+    const { state, removeTask } = this.props
+
     return (
       <Paper>
         <Table className="table">
@@ -30,7 +32,7 @@ class TasksLog extends Component {
             </CustomTableRow>
           </TableHead>
           <TableBody>
-            {this.props.state.tasks.map((task, index) => {
+            {state.tasks.map((task, index) => {
               return (
                 <CustomTableRow key={task.id}>
                   <CustomTableCell component="th" scope="row">
@@ -53,9 +55,9 @@ class TasksLog extends Component {
                   </CustomTableCell>
                   <CustomTableCell>
                     <Time time={{
-                      hours: task.speed.hours,
-                      minutes: task.speed.minutes,
-                      seconds: task.speed.seconds
+                      hours: task.spend.hours,
+                      minutes: task.spend.minutes,
+                      seconds: task.spend.seconds
                     }}/>
                   </CustomTableCell>
                   <CustomTableCell>
@@ -66,7 +68,7 @@ class TasksLog extends Component {
                   <CustomTableCell>
                     <Button
                       text="Delete"
-                      action={() => { this.props.removeTask(task.id) }}
+                      action={() => { removeTask(task.id) }}
                     />
                   </CustomTableCell>
                 </CustomTableRow>

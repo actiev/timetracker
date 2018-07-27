@@ -27,7 +27,7 @@ const TaskInfo = ({task}) => {
               <CustomTableCell>Task</CustomTableCell>
               <CustomTableCell>Time start</CustomTableCell>
               <CustomTableCell>Time end</CustomTableCell>
-              <CustomTableCell>Time speed</CustomTableCell>
+              <CustomTableCell>Time spend</CustomTableCell>
             </CustomTableRow>
           </TableHead>
           <TableBody>
@@ -49,9 +49,9 @@ const TaskInfo = ({task}) => {
               </CustomTableCell>
               <CustomTableCell>
                 <Time time={{
-                  hours: task.speed.hours,
-                  minutes: task.speed.minutes,
-                  seconds: task.speed.seconds
+                  hours: task.spend.hours,
+                  minutes: task.spend.minutes,
+                  seconds: task.spend.seconds
                 }}/>
               </CustomTableCell>
             </CustomTableRow>

@@ -3,66 +3,7 @@ const initialState = {
   taskTitle: '',
   openModal: false,
   handle: false,
-  tickId: null,
-  tasks: [
-    {
-      id: 1,
-      start: {
-        hours: 14,
-        minutes: 30,
-        seconds: 57
-      },
-      end: {
-        hours: 16,
-        minutes: 15,
-        seconds: 47
-      },
-      title: 'task1',
-      speed: {
-        hours: 1,
-        minutes: 0,
-        seconds: 10
-      }
-    },
-    {
-      id: 2,
-      start: {
-        hours: 16,
-        minutes: 15,
-        seconds: 57
-      },
-      end: {
-        hours: 17,
-        minutes: 30,
-        seconds: 47
-      },
-      title: 'task2',
-      speed: {
-        hours: 1,
-        minutes: 0,
-        seconds: 10
-      }
-    },
-    {
-      id: 3,
-      start: {
-        hours: 17,
-        minutes: 30,
-        seconds: 57
-      },
-      end: {
-        hours: 22,
-        minutes: 40,
-        seconds: 47
-      },
-      title: 'task3',
-      speed: {
-        hours: 1,
-        minutes: 0,
-        seconds: 10
-      }
-    }
-  ]
+  tasks: []
 }
 
 export default (state = initialState, action) => {
@@ -79,10 +20,14 @@ export default (state = initialState, action) => {
       }
     case 'REMOVE_TASKS':
       return {...state, tasks: []}
+    case 'ADD_TASKS':
+      return {...state, tasks: action.tasks}
     case 'SET_TIMER':
       return {...state, timer: action.timer}
-    case 'SET_START_TIME':
-      return {...state, startTime: action.startTime}
+    case 'SET_TIMER_ID':
+      return {...state, timerId: action.id}
+    case 'START':
+      return {...state, buttons: !state.buttons}
     case 'SET_END_TIME':
       return {...state, endTime: action.endTime}
     case 'SET_TASK_TITLE':
@@ -92,17 +37,18 @@ export default (state = initialState, action) => {
         ...state,
         buttons: !state.buttons,
         timer: null,
+        startTime: 0,
         taskTitle: ''
       }
     case 'TOGGLE_BUTTONS':
-      return {
-        ...state,
-        buttons: !state.buttons
-      }
+      return {...state, buttons: !state.buttons}
     case 'TOGGLE_TABS':
       return {...state, handle: !state.handle}
     case 'OPEN_MODAL':
       return {...state, openModal: !state.openModal}
+    case 'PUSH_TIME_LOCAL_STORAGE':
+      console.log(action)
+      return {...state, startTime: action.time}
     default:
       return state
   }

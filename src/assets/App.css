@@ -42,8 +42,8 @@ a {
   justify-content: center;
   align-items: center;
   box-shadow: 0px 3px 10px 0px #a19e9e;
-  font-size: 26px;
-  margin-bottom: 15px;
+  font-size: 30px;
+  margin-bottom: 20px;
 }
 
 .hide {
@@ -56,6 +56,10 @@ a {
   margin-top: 18px;
 }
 
+.tabs div {
+  box-shadow: none;
+}
+
 .tabs .header {
   background-color: #1fbcd3;
   box-shadow: none
@@ -63,6 +67,11 @@ a {
 
 .tabs .tab {
  min-width: 50%
+}
+
+.tab span {
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .charts .row {
