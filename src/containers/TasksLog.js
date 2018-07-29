@@ -81,31 +81,25 @@ class TasksLog extends Component {
   }
 }
 
+const timerPropTypes = PropTypes.shape({
+  hours: PropTypes.number,
+  minutes: PropTypes.number,
+  seconds: PropTypes.number
+})
+
 TasksLog.propTypes = {
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       title: PropTypes.string,
-      start: PropTypes.shape({
-        hours: PropTypes.number,
-        minutes: PropTypes.number,
-        seconds: PropTypes.number
-      }),
-      end: PropTypes.shape({
-        hours: PropTypes.number,
-        minutes: PropTypes.number,
-        seconds: PropTypes.number
-      }),
-      speed: PropTypes.shape({
-        hours: PropTypes.number,
-        minutes: PropTypes.number,
-        seconds: PropTypes.number
-      })
+      start: timerPropTypes,
+      end: timerPropTypes,
+      speed: timerPropTypes
     })
   )
 }
 
-const mapStateToProps = state => { return {state: state.initialState} }
+const mapStateToProps = state => ({state: state.initialState})
 
 const matchDispatchToProps = dispatch => {
   return bindActionCreators(TabsActions, dispatch)

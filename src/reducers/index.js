@@ -1,8 +1,8 @@
 const initialState = {
-  buttons: true,
   taskTitle: '',
-  openModal: false,
-  handle: false,
+  startTime: null,
+  endTime: null,
+  timer: null,
   tasks: []
 }
 
@@ -26,29 +26,20 @@ export default (state = initialState, action) => {
       return {...state, timer: action.timer}
     case 'SET_TIMER_ID':
       return {...state, timerId: action.id}
-    case 'START':
-      return {...state, buttons: !state.buttons}
     case 'SET_END_TIME':
       return {...state, endTime: action.endTime}
+    case 'PUSH_TIME_LOCAL_STORAGE':
+      return {...state, startTime: action.time}
     case 'SET_TASK_TITLE':
       return {...state, taskTitle: action.title}
     case 'RESET':
       return {
         ...state,
-        buttons: !state.buttons,
         timer: null,
-        startTime: 0,
+        startTime: null,
+        endTime: null,
         taskTitle: ''
       }
-    case 'TOGGLE_BUTTONS':
-      return {...state, buttons: !state.buttons}
-    case 'TOGGLE_TABS':
-      return {...state, handle: !state.handle}
-    case 'OPEN_MODAL':
-      return {...state, openModal: !state.openModal}
-    case 'PUSH_TIME_LOCAL_STORAGE':
-      console.log(action)
-      return {...state, startTime: action.time}
     default:
       return state
   }

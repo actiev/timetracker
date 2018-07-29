@@ -8,7 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import PropTypes from 'prop-types'
 
 const Modal = ({ open, action }) => (
-  <div>
+  <div className="modal">
     <Dialog
       open={open}
       onClose={action}

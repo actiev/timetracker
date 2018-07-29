@@ -12,8 +12,6 @@ class TasksChart extends Component {
     this.minPerHour = 60
     this.hourStartDay = 0
     this.hourFinishDay = 23
-
-    console.log(props)
   }
 
   shouldComponentUpdate(nextProps) {
@@ -25,7 +23,7 @@ class TasksChart extends Component {
   createChart = (tasks) => {
     const { state } = this.props
 
-    tasks = tasks || state.tasks
+    tasks = state.tasks || tasks
 
     const data = []
 
@@ -137,14 +135,14 @@ class TasksChart extends Component {
           {state.tasks.map(task => (<Bar dataKey={task.title} stackId="a" key={task.id} fill={this.generateColor()} />))}
         </BarChart>
         <div className="row">
-          <Button text="generate" action={this.generateTasks} />
+          <Button className="syka" text="generate" action={this.generateTasks} />
         </div>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => { return {state: state.initialState} }
+const mapStateToProps = state => ({state: state.initialState})
 
 const matchDispatchToProps = dispatch => {
   return bindActionCreators(TaskActionCreators, dispatch)

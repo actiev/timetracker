@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { routerReducer } from 'react-router-redux'
 import { BrowserRouter as Router} from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
-import taskReducers from './reducers/index'
+import rootReducer from './reducers/index'
 import './assets/App.css'
 import routes from './router/index'
 import rootSaga from './sagas'
@@ -14,7 +14,7 @@ import rootSaga from './sagas'
 const sagaMiddleware = createSagaMiddleware()
 const store = createStore(
   combineReducers({
-    initialState: taskReducers,
+    initialState: rootReducer,
     routing: routerReducer
   }),
   applyMiddleware(sagaMiddleware)

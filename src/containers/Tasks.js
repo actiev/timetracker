@@ -10,12 +10,25 @@ import Button from '../components/Button'
 import TextInput from '../components/TextInput'
 
 class Tasks extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      openModal: false,
+      tabs: false,
+      taskTitle: '',
+      buttons: true
+    }
+  }
+
   componentWillMount () {
-    const { route, toggleTabs, refreshTimer } = this.props
+    const { route, refreshTimer, state } = this.props
 
-    if (route.path !== '/') toggleTabs()
+    if (route.path !== '/') this.setState({tabs: !this.state.tabs})
 
-    refreshTimer()
+    if (!state.timerId) {
+      refreshTimer()
+    }
   }
 
   getTimeMsec = () => {
@@ -23,26 +36,32 @@ class Tasks extends Component {
   }
 
   start = () => {
-    const { startTimer, start } = this.props
+    const { start, state } = this.props
 
-    start()
+    if (state.startTime) return
 
-    startTimer()
+    start(this.state.taskTitle)
   }
 
   stop = () => {
-    const { state, openModal, reset } = this.props
+    const { state, reset } = this.props
+    const title = state.taskTitle || this.state.taskTitle
 
     if (!state.timer) {
       return
     }
 
-    if (!state.taskTitle) {
-      openModal()
+    if (!title) {
+      this.setState({openModal: !this.state.openModal})
+
       return
     }
 
     this.addNewTask()
+
+    this.setState({
+      taskTitle: ''
+    })
 
     clearInterval(state.timerId)
 
@@ -60,9 +79,11 @@ class Tasks extends Component {
       seconds: mscToDate.getSeconds()
     }
 
+    const title = state.taskTitle || this.state.taskTitle
+
     addTask({
       id: this.getTimeMsec(),
-      title: state.taskTitle,
+      title: title,
       start: startTime,
       end: state.endTime,
       spend: state.timer
@@ -70,10 +91,10 @@ class Tasks extends Component {
   }
 
   toggleTabs = () => {
-    const { state, toggleTabs, history } = this.props
+    const { history } = this.props
 
-    if (state.handle) {
-      toggleTabs()
+    if (this.state.tabs) {
+      this.setState({tabs: !this.state.tabs})
 
       history.push('/')
     } else {
@@ -81,33 +102,43 @@ class Tasks extends Component {
     }
   }
 
+  setTaskTitle = (e) => {
+    this.setState({
+      taskTitle: e.target.value
+    })
+  }
+
+  closeModal = () => {
+    this.setState({openModal: !this.state.openModal})
+  }
+
   render () {
-    const { state, setTaskTitle, openModal } = this.props
+    const { state } = this.props
 
     return (
       <div className="container">
-        <TextInput action={(e) => {setTaskTitle(e.target.value)}} value={state.taskTitle}/>
+        <TextInput action={this.setTaskTitle} value={state.taskTitle || this.state.taskTitle} />
         <div className="circle">
           <Time time={state.timer} />
         </div>
         <Button
           action={this.start}
-          className={classNames({'hide': !state.buttons})}
+          className={classNames({'start': true, 'hide': state.timer ? true : !this.state.buttons})}
           text="start"
         />
         <Button
           action={this.stop}
-          className={classNames({'hide': state.buttons})}
+          className={classNames({'stop': true, 'hide': state.timer ? false : this.state.buttons})}
           text="stop"
         />
-        <Tabs value={state.handle} action={this.toggleTabs}/>
-        <Modal open={state.openModal} action={() => {openModal()}}/>
+        <Tabs value={this.state.tabs} action={this.toggleTabs}/>
+        <Modal open={this.state.openModal} action={this.closeModal}/>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => { return {state: state.initialState} }
+const mapStateToProps = state => ({state: state.initialState})
 
 const matchDispatchToProps = dispatch => {
   return bindActionCreators(TaskActionCreators, dispatch)

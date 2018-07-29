@@ -1,5 +1,5 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
-import { setTimer, setEndTime, setTimerId, toggleButtons, pushTimeLocalStorage } from '../actions'
+import { setTimer, setEndTime, setTimerId, pushTimeLocalStorage, setTaskTitle} from '../actions'
 import { eventChannel } from 'redux-saga'
 
 export default function * rootSaga () {
@@ -7,12 +7,31 @@ export default function * rootSaga () {
   yield takeEvery('RESET', removeLocalStorage)
   yield takeEvery('START_TIMER', startTimer)
   yield takeEvery('REFRESH_TIMER', refreshTimer)
+  yield takeEvery('SET_TITLE', setTitleInRedux)
 }
 
-function * setLocalStorage () {
-  const timeInMsec = new Date().getTime()
+function * setLocalStorage (data) {
+  try {
+    const timeInMsec = new Date().getTime()
 
-  yield call([localStorage, 'setItem'], 'startTimer', timeInMsec)
+    if (data.title) {
+      yield call([localStorage, 'setItem'], 'startTimer', JSON.stringify({timer: timeInMsec, title: data.title}))
+      yield setTitleInRedux(data.title)
+    } else {
+      yield call([localStorage, 'setItem'], 'startTimer', JSON.stringify({timer: timeInMsec}))
+    }
+
+    yield refreshTimer()
+
+  } catch (e) {
+    throw e
+  }
+}
+
+function * setTitleInRedux (data) {
+  if (data) {
+    yield put(setTaskTitle(data.title))
+  }
 }
 
 function * removeLocalStorage () {
@@ -20,23 +39,23 @@ function * removeLocalStorage () {
 }
 
 function * refreshTimer () {
-  try {
-    const timer = yield call([localStorage, 'getItem'], 'startTimer')
+  const storage = yield call([localStorage, 'getItem'], 'startTimer')
+  const localStorageObj = JSON.parse(storage)
 
-    if (timer) {
-      yield put(toggleButtons())
-      yield startTimer()
+  if (localStorageObj) {
+    try {
+      yield put(setTaskTitle(localStorageObj.title))
+      yield startTimer(localStorageObj.timer)
+    } catch (e) {
+      throw e
     }
-  } catch (e) {
-    throw new Error(e)
   }
 }
 
-function * startTimer () {
+function * startTimer (timer) {
   const msecPerSec = 1000
   const msecPerMinute = msecPerSec * 60
   const msecPerHour = msecPerMinute * 60
-  const timer = yield call([localStorage, 'getItem'], 'startTimer')
 
   yield put(pushTimeLocalStorage(timer))
 

@@ -25,16 +25,13 @@ export const toggleButtons = () => ({
   type: 'TOGGLE_BUTTONS'
 })
 
-export const start = () => ({
-  type: 'START'
+export const start = title => ({
+  type: 'START',
+  title
 })
 
 export const refreshTimer = () => ({
   type: 'REFRESH_TIMER'
-})
-
-export const startTimer = () => ({
-  type: 'START_TIMER'
 })
 
 export const pushTimeLocalStorage = time => ({
@@ -45,6 +42,11 @@ export const pushTimeLocalStorage = time => ({
 export const setEndTime = endTime => ({
   type: 'SET_END_TIME',
   endTime
+})
+
+export const setTitle = title => ({
+  type: 'SET_TITLE',
+  title
 })
 
 export const setTaskTitle = title => ({

@@ -25,7 +25,7 @@ const TextInput = ({classes, action, value}) => (
 
 TextInput.propTypes = {
   classes: PropTypes.object.isRequired,
-  action: PropTypes.func.isRequired,
+  action: PropTypes.func,
   value: PropTypes.string
 }
 
